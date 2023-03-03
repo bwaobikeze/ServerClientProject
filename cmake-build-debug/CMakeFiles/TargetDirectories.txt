@@ -1,0 +1,4 @@
+/Users/brianwaobikeze/Desktop/ServerClientProj2023/cmake-build-debug/CMakeFiles/ServerClientProj2023.dir
+/Users/brianwaobikeze/Desktop/ServerClientProj2023/cmake-build-debug/CMakeFiles/ServerClientProj2023_0.dir
+/Users/brianwaobikeze/Desktop/ServerClientProj2023/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/brianwaobikeze/Desktop/ServerClientProj2023/cmake-build-debug/CMakeFiles/rebuild_cache.dir
