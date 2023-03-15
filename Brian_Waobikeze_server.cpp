@@ -43,13 +43,6 @@ void printAllTestResults()
 void formatResults(string line)
 {
     vector<string> currentLine;
-//    testResult currentTestResult;
-//    istringstream iss(line);
-//    string firstSplitter;
-//    string secondSplitter;
-//    getline(iss, firstSplitter, '\n');
-//    istringstream sendStream(firstSplitter);
-    //currentLine.push_back(line);
     allTestResults.push_back(line);
 }
 
@@ -69,15 +62,15 @@ void readResults(string inputPath)
     //printAllTestResults();
 }
 
-//void getTestResult(string testID, string birthday)
+//void getTestResult(string LicensePlateNum)
 //{
-//    cout << "getting results for: " << testID << ":" << birthday << endl;
-//    if (testID.size() < 1 || birthday.size() < 1)
+//    cout << "getting results for: " << testID << endl;
+//    if (LicensePlateNum.size() < 1)
 //        return;
 //    for (int i = 0; i < allTestResults.size(); i++)
 //    {
 //
-//        if (allTestResults[i].testID.compare(testID) == 0)
+//        if (allTestResults[i]==LicensePlateNum)
 //        {
 //            cout << "Test ID: " << allTestResults[i].testID << endl;
 //            cout << "Birthday: " << allTestResults[i].birthday << endl;
@@ -110,24 +103,10 @@ void promptPortNumber()
 //        for (int i = 0; i < clientMessageLength;
 //             i++)
 //        {
-//            if (clientMessage[i] != ' ')
-//            {
-//                if (clientMessage[i] == ':')
-//                {
-//                    splitterIDX = i;
-//                    continue;
-//                }
-//                if (splitterIDX != -1 && i > splitterIDX)
-//                {
-//                    birthday += clientMessage[i];
-//                }
-//                else
-//                {
 //                    testID += clientMessage[i];
-//                }
-//            }
+//
 //        }
-//        getTestResult(testID, birthday);
+//        getTestResult(testID);
 //    }
 //    catch (...)
 //    {
@@ -162,18 +141,16 @@ int main(int argc, char *argv[])
 //    while (1)
 //    {
 //        clilen = sizeof(cli_addr);
-//        newsockfd = accept(sockfd,
-//                           (struct sockaddr *)&cli_addr,
-//                           &clilen); // wakes up process when client connects
-//        if (newsockfd < 0)
-//            error("ERROR on accept");
+            socklen_t len;
 //        // runs when client connects to server
 //        bzero(buffer, 256);
+// place recicev from here
 //        n = read(newsockfd, buffer, 255);
 //        if (n < 0)
 //            error("ERROR reading from socket");
 //        printf("Here is the message: %s\n", buffer);
 //        //getClientResponse(buffer);
+// place send to here
 //        n = write(newsockfd, clientResult, 18);
 //        if (n < 0)
 //            error("ERROR writing to socket");
