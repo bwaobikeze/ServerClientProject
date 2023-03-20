@@ -77,21 +77,9 @@ void promptLicensePlate()
 //                cout << "Invalid test id" << endl;
 //                continue;
 //            }
-            localMessage += licenseNumber + ":";
+            localMessage += licenseNumber;
             break;
         }
-//        while (1)
-//        {
-//            cout << "Enter your birthday in MMDDYYYY format: ";
-//            cin >> birthday;
-//            if (birthday.size() != 8)
-//            {
-//                cout << "Invalid birthday" << endl;
-//                continue;
-//            }
-//            localMessage += birthday;
-//            break;
-//        }
 
         cout << "Local message " << localMessage << endl;
         int clientMessageLength = localMessage.length();

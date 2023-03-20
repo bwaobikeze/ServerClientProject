@@ -18,10 +18,10 @@
 
 
 using namespace std;
-
+#define MAXLINE 1024
 vector<string> allTestResults;
 int portno;
-char clientResult[1];
+char clientResult[MAXLINE];
 int clientMessageLength = 18;
 void error(const char *msg)
 {
@@ -62,23 +62,24 @@ void readResults(string inputPath)
     //printAllTestResults();
 }
 
-//void getTestResult(string LicensePlateNum)
-//{
-//    cout << "getting results for: " << testID << endl;
+void getTestResult(string LicensePlateNum)
+{
+//    cout << "getting results for: " << LicensePlateNum << endl;
 //    if (LicensePlateNum.size() < 1)
 //        return;
-//    for (int i = 0; i < allTestResults.size(); i++)
-//    {
-//
-//        if (allTestResults[i]==LicensePlateNum)
-//        {
-//            cout << "Test ID: " << allTestResults[i].testID << endl;
-//            cout << "Birthday: " << allTestResults[i].birthday << endl;
-//            cout << "Test result: " << allTestResults[i].result << endl;
-//            clientResult[0] = allTestResults[i].result[0];
-//        }
-//    }
-//}
+   // printAllTestResults();
+    for (int i = 0; i < allTestResults.size(); i++)
+    {
+            //cout<<allTestResults[i];
+        if (LicensePlateNum==allTestResults[i])
+        {
+            string MessageToCLient= allTestResults[i]+": "+"Reported as stolen ";
+            cout<<MessageToCLient<<endl;
+                strcpy(clientResult,MessageToCLient.c_str());
+                cout<<clientResult;
+        }
+    }
+}
 
 void promptPortNumber()
 {
@@ -93,31 +94,28 @@ void promptPortNumber()
     }
 }
 
-//void getClientResponse(char clientMessage[])
-//{
-//    try
-//    {
-//        string testID;
-//        string birthday;
-//        int splitterIDX = -1;
-//        for (int i = 0; i < clientMessageLength;
-//             i++)
-//        {
-//                    testID += clientMessage[i];
-//
-//        }
-//        getTestResult(testID);
-//    }
-//    catch (...)
-//    {
-//        cout << "Error attempting to get your result" << endl;
-//    }
-//}
+void getClientResponse(char clientMessage[])
+{
+    string  LicensePlate;
+    try
+    {
+        for (int i = 0; i < clientMessageLength;
+             i++)
+        {
+                    LicensePlate += clientMessage[i];
+
+        }
+        getTestResult(LicensePlate);
+    }
+    catch (...)
+    {
+        cout << "Error attempting to get your result" << endl;
+    }
+}
 
 int main(int argc, char *argv[])
 {
     readResults("/Users/brianwaobikeze/Desktop/ServerClientProj2023/read.txt");
-
     int sockfd, newsockfd, n;
     socklen_t clilen;
     char buffer[256];
@@ -140,22 +138,13 @@ int main(int argc, char *argv[])
     }
 //    while (1)
 //    {
-//        clilen = sizeof(cli_addr);
-            socklen_t len;
-//        // runs when client connects to server
-//        bzero(buffer, 256);
-// place recicev from here
-//        n = read(newsockfd, buffer, 255);
-//        if (n < 0)
-//            error("ERROR reading from socket");
-//        printf("Here is the message: %s\n", buffer);
-//        //getClientResponse(buffer);
-// place send to here
-//        n = write(newsockfd, clientResult, 18);
-//        if (n < 0)
-//            error("ERROR writing to socket");
-//        close(newsockfd);
-//    }
+        clilen = sizeof(cli_addr);
+            //socklen_t len;
+    n= recvfrom(sockfd,(char*)buffer,MAXLINE,MSG_WAITALL,(struct sockaddr *) &cli_addr,&clilen);
+    buffer[n]='\0';
+    //printf("%s",buffer);
+    getClientResponse(buffer);
+    sendto(sockfd,(const char *) clientResult,strlen( clientResult),0,(const struct sockaddr *) &cli_addr,clilen);
    close(sockfd);
     return 0;
 }
