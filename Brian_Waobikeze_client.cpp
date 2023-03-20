@@ -7,7 +7,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-// Second COSC 3360 assignment for fall 2021
+// Second COSC 3360 assignment for spring 2022
 //  Client part
 //
 // Brian Waobikeze
