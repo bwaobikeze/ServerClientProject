@@ -71,7 +71,6 @@ void promptLicensePlate()
         {
             cout << "Enter License plate number: ";
             cin >> licenseNumber;
-            cout << licenseNumber.size() << endl;
             if (licenseNumber.size() != 9)
 //            {
 //                cout << "Invalid test id" << endl;
@@ -81,7 +80,7 @@ void promptLicensePlate()
             break;
         }
 
-        cout << "Local message " << localMessage << endl;
+//        cout << "Local message " << localMessage << endl;
         int clientMessageLength = localMessage.length();
         char clientMessageCharArray[clientMessageLength + 1];
         strcpy(buffer, localMessage.c_str());

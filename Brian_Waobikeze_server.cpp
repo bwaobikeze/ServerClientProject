@@ -64,13 +64,14 @@ void readResults(string inputPath)
 
 void getTestResult(string LicensePlateNum)
 {
-//    cout << "getting results for: " << LicensePlateNum << endl;
-//    if (LicensePlateNum.size() < 1)
-//        return;
-   // printAllTestResults();
+    //cout << "getting results for: " << LicensePlateNum <<"And this is the size string "<<LicensePlateNum.size() <<" From the getTestResult() that is passed in a string"<< endl;
+    int stringSize=LicensePlateNum.size();
+    if (stringSize < 1)
+        return;
     for (int i = 0; i < allTestResults.size(); i++)
     {
-            //cout<<allTestResults[i];
+        cout<<"inside for loop: "<<allTestResults[i]<<endl;
+        //cout<<allTestResults[i];
         if (LicensePlateNum==allTestResults[i])
         {
             string MessageToCLient= allTestResults[i]+": "+"Reported as stolen ";
@@ -79,6 +80,7 @@ void getTestResult(string LicensePlateNum)
                 cout<<clientResult;
         }
     }
+    cout<<"After for loop"<<endl;
 }
 
 void promptPortNumber()
@@ -105,6 +107,7 @@ void getClientResponse(char clientMessage[])
                     LicensePlate += clientMessage[i];
 
         }
+        //cout<<"String Represntation returned from getClientResponse() function: "<<LicensePlate<<endl;
         getTestResult(LicensePlate);
     }
     catch (...)
@@ -113,38 +116,47 @@ void getClientResponse(char clientMessage[])
     }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     readResults("/Users/brianwaobikeze/Desktop/ServerClientProj2023/read.txt");
     int sockfd, newsockfd, n;
     socklen_t clilen;
     char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
-
+try{
     sockfd = socket(AF_INET, SOCK_DGRAM, 0); // creates an internet socket of stream type
     if (sockfd < 0)
         error("ERROR opening socket");
-    bzero((char *)&serv_addr, sizeof(serv_addr)); // sets all values in buffer  to 0
+    bzero((char *) &serv_addr, sizeof(serv_addr)); // sets all values in buffer  to 0
     // portno = atoi(argv[1]);                       // sets port number for server to listen
     promptPortNumber();
     // configure server  addres struct
     serv_addr.sin_family = AF_INET;         // address family
     serv_addr.sin_addr.s_addr = INADDR_ANY; // host IP address
     serv_addr.sin_port = htons(portno);     // host port number
-    if ( ::bind(sockfd, (const struct sockaddr *)&serv_addr,
-              sizeof(serv_addr)) < 0 ) {
+    if (::bind(sockfd, (const struct sockaddr *) &serv_addr,
+               sizeof(serv_addr)) < 0) {
         // bind address of host and port
         error("ERROR on binding");
     }
-//    while (1)
+//    while (true)
 //    {
-        clilen = sizeof(cli_addr);
-            //socklen_t len;
-    n= recvfrom(sockfd,(char*)buffer,MAXLINE,MSG_WAITALL,(struct sockaddr *) &cli_addr,&clilen);
-    buffer[n]='\0';
-    //printf("%s",buffer);
+    clilen = sizeof(cli_addr);
+    //socklen_t len;
+    n = recvfrom(sockfd, (char *) buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &cli_addr, &clilen);
+    buffer[n] = '\0';
+    //printf("%s", buffer);
     getClientResponse(buffer);
-    sendto(sockfd,(const char *) clientResult,strlen( clientResult),0,(const struct sockaddr *) &cli_addr,clilen);
-   close(sockfd);
+//    if(bufString=="killsvc"){
+//        break;
+//    }
+    sendto(sockfd, (const char *) clientResult, strlen(clientResult), 0, (const struct sockaddr *) &cli_addr, clilen);
+}
+catch(const exception& e){
+    cout<<"error found"<<endl;
+    cout<<e.what();
+}
+    //cout<<"Received request to terminate the service bye!!"<<endl;
+ close(sockfd);
     return 0;
+
 }
