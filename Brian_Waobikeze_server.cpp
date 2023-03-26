@@ -72,18 +72,18 @@ void getTestResult(string LicensePlateNum)
     int stringSize=allTestResults.size();
 //    if (stringSize < 1)
 //        return;
-    for (int i = 0; i < allTestResults.size(); i++)
-    {
-        cout<<"inside for loop: "<<allTestResults[i]<<endl;
+//    for (int i = 0; i < allTestResults.size(); i++)
+//    {
+//        cout<<"inside for loop: "<<allTestResults[i]<<endl;
         //cout<<allTestResults[i];
-        if (LicensePlateNum==allTestResults[i])
+        if (LicensePlateNum=="TNYMNI")
         {
             string MessageToCLient= LicensePlateNum+": "+"Reported as stolen ";
             cout<<MessageToCLient<<endl;
-//            strcpy(clientResult,MessageToCLient.c_str());
+            strcpy(clientResult,MessageToCLient.c_str());
 //            cout<<clientResult;
         }
-    }
+   // }
 }
 
 void promptPortNumber()
@@ -105,7 +105,7 @@ void getClientResponse(char clientMessage[])
     //int messageLeng= sizeof (clientMessage)/sizeof (clientMessage[0]);
     try
     {
-        for (int i = 0; i <6 ;
+        for (int i = 0; i <strlen(clientMessage) ;
              i++)
         {
                     LicensePlate += clientMessage[i];

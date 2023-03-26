@@ -19,6 +19,7 @@ int portno;
 struct hostent *server;
 // char clientMessage[];
 char buffer[MAXLINE];
+char RECVbuffer[MAXLINE];
 void error(const char *msg)
 {
     perror(msg);
@@ -122,12 +123,13 @@ int main(int argc, char *argv[])
            MSG_CONFIRM, (const struct sockaddr *) &serv_addr,
            sizeof(serv_addr));
 
-    n=recvfrom(sockfd, (char *)buffer, MAXLINE,
+    n=recvfrom(sockfd, (char *)RECVbuffer, MAXLINE,
                MSG_WAITALL, (struct sockaddr *) &serv_addr,
                &len);
     if (n < 0)
         error("ERROR reading from socket");
-    buffer[n] = '\0';
+    RECVbuffer[n] = '\0';
+    cout<<RECVbuffer<<endl;
     //printf("%s", buffer);
     close(sockfd);
     return 0;
