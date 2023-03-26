@@ -64,23 +64,26 @@ void readResults(string inputPath)
 
 void getTestResult(string LicensePlateNum)
 {
-    //cout << "getting results for: " << LicensePlateNum <<"And this is the size string "<<LicensePlateNum.size() <<" From the getTestResult() that is passed in a string"<< endl;
-    int stringSize=LicensePlateNum.size();
-    if (stringSize < 1)
-        return;
+    //string checkInput="TNYMNI";
+    //cout << "getting results for:" << LicensePlateNum <<endl;
+//    cout<<LicensePlateNum<<endl;
+//    cout<< checkInput<<endl;
+
+    int stringSize=allTestResults.size();
+//    if (stringSize < 1)
+//        return;
     for (int i = 0; i < allTestResults.size(); i++)
     {
         cout<<"inside for loop: "<<allTestResults[i]<<endl;
         //cout<<allTestResults[i];
         if (LicensePlateNum==allTestResults[i])
         {
-            string MessageToCLient= allTestResults[i]+": "+"Reported as stolen ";
+            string MessageToCLient= LicensePlateNum+": "+"Reported as stolen ";
             cout<<MessageToCLient<<endl;
-                strcpy(clientResult,MessageToCLient.c_str());
-                cout<<clientResult;
+//            strcpy(clientResult,MessageToCLient.c_str());
+//            cout<<clientResult;
         }
     }
-    cout<<"After for loop"<<endl;
 }
 
 void promptPortNumber()
@@ -99,15 +102,15 @@ void promptPortNumber()
 void getClientResponse(char clientMessage[])
 {
     string  LicensePlate;
+    //int messageLeng= sizeof (clientMessage)/sizeof (clientMessage[0]);
     try
     {
-        for (int i = 0; i < clientMessageLength;
+        for (int i = 0; i <6 ;
              i++)
         {
                     LicensePlate += clientMessage[i];
 
         }
-        //cout<<"String Represntation returned from getClientResponse() function: "<<LicensePlate<<endl;
         getTestResult(LicensePlate);
     }
     catch (...)
@@ -117,10 +120,10 @@ void getClientResponse(char clientMessage[])
 }
 
 int main(int argc, char *argv[]) {
-    readResults("/Users/brianwaobikeze/Desktop/ServerClientProj2023/read.txt");
+    readResults("/Users/brianwaobikeze/Desktop/ServerClientProj2023/Stolen_cars.txt");
     int sockfd, newsockfd, n;
     socklen_t clilen;
-    char buffer[256];
+    char buffer[MAXLINE];
     struct sockaddr_in serv_addr, cli_addr;
 try{
     sockfd = socket(AF_INET, SOCK_DGRAM, 0); // creates an internet socket of stream type
@@ -140,11 +143,12 @@ try{
     }
 //    while (true)
 //    {
+    memset(&cli_addr,0,sizeof (cli_addr));
     clilen = sizeof(cli_addr);
     //socklen_t len;
-    n = recvfrom(sockfd, (char *) buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &cli_addr, &clilen);
+   n= recvfrom(sockfd, (char *) buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &cli_addr, &clilen);
     buffer[n] = '\0';
-    //printf("%s", buffer);
+//    printf("%s", buffer);
     getClientResponse(buffer);
 //    if(bufString=="killsvc"){
 //        break;

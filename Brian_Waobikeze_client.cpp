@@ -14,11 +14,11 @@
 // November 2021
 #define MSG_CONFIRM 0
 using namespace std;
-
+#define MAXLINE 1024
 int portno;
 struct hostent *server;
 // char clientMessage[];
-char buffer[256];
+char buffer[MAXLINE];
 void error(const char *msg)
 {
     perror(msg);
@@ -117,27 +117,18 @@ int main(int argc, char *argv[])
 //        error("ERROR connecting");
 //    bzero(buffer, 256);
     promptLicensePlate();
+//    printf("%s", buffer);
     sendto(sockfd, (const char *)buffer, strlen(buffer),
            MSG_CONFIRM, (const struct sockaddr *) &serv_addr,
            sizeof(serv_addr));
-    // fgets(buffer, 255, stdin); // get input from stdin
-    //n = write(sockfd, buffer, strlen(buffer));
-//    if (n < 0)
-//        error("ERROR writing to socket");
-//    bzero(buffer, 256);
-    //n = read(sockfd, buffer, 255);
-    n=recvfrom(sockfd, (char *)buffer, 255,
+
+    n=recvfrom(sockfd, (char *)buffer, MAXLINE,
                MSG_WAITALL, (struct sockaddr *) &serv_addr,
                &len);
     if (n < 0)
         error("ERROR reading from socket");
     buffer[n] = '\0';
-//    if (buffer[0] == 'N')
-//        cout << "Your test result was NEGATIVE." << endl;
-//    else if (buffer[0] == 'P')
-//        cout << "Your test result was POSITIVE" << endl;
-//    else
-//        cout << "The test result you requested is not in our database." << endl;
+    //printf("%s", buffer);
     close(sockfd);
     return 0;
 }
