@@ -42,7 +42,8 @@ void printAllTestResults()
 
 void formatResults(string line)
 {
-    vector<string> currentLine;
+    //vector<string> currentLine;
+    //cout<<line<<endl;
     allTestResults.push_back(line);
 }
 
@@ -55,7 +56,7 @@ void readResults(string inputPath)
         error("Unable to read results");
     }
     string line;
-    while (getline(fileVar, line))
+    while (getline(fileVar, line,'\r'))
     {
         formatResults(line);
     }
@@ -64,26 +65,15 @@ void readResults(string inputPath)
 
 void getTestResult(string LicensePlateNum)
 {
-    //string checkInput="TNYMNI";
-    //cout << "getting results for:" << LicensePlateNum <<endl;
-//    cout<<LicensePlateNum<<endl;
-//    cout<< checkInput<<endl;
-
-    int stringSize=allTestResults.size();
-//    if (stringSize < 1)
-//        return;
-//    for (int i = 0; i < allTestResults.size(); i++)
-//    {
-//        cout<<"inside for loop: "<<allTestResults[i]<<endl;
-        //cout<<allTestResults[i];
-        if (LicensePlateNum=="TNYMNI")
-        {
-            string MessageToCLient= LicensePlateNum+": "+"Reported as stolen ";
-            cout<<MessageToCLient<<endl;
-            strcpy(clientResult,MessageToCLient.c_str());
-//            cout<<clientResult;
+    string inputVal = LicensePlateNum;
+    cout << "getting results for:" << LicensePlateNum <<endl;
+    for (int i = 0; i < allTestResults.size(); i++) {
+        if (inputVal == allTestResults.at(i)) {
+            string MessageToCLient = LicensePlateNum + ": " + "Reported as stolen ";
+            cout << MessageToCLient << endl;
+            strcpy(clientResult, MessageToCLient.c_str());
         }
-   // }
+    }
 }
 
 void promptPortNumber()
