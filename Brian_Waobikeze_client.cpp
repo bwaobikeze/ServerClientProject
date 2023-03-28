@@ -7,17 +7,15 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-// Second COSC 3360 assignment for spring 2022
+// Second COSC 3360 assignment for spring 2023
 //  Client part
-//
 // Brian Waobikeze
-// November 2021
+// March 2023
 #define MSG_CONFIRM 0
 using namespace std;
 #define MAXLINE 1024
 int portno;
 struct hostent *server;
-// char clientMessage[];
 char buffer[MAXLINE];
 char RECVbuffer[MAXLINE];
 void error(const char *msg)
@@ -72,11 +70,6 @@ void promptLicensePlate()
         {
             cout << "Enter License plate number: ";
             cin >> licenseNumber;
-            if (licenseNumber.size() != 9)
-//            {
-//                cout << "Invalid test id" << endl;
-//                continue;
-//            }
             localMessage += licenseNumber;
             break;
         }
@@ -114,9 +107,6 @@ int main(int argc, char *argv[])
           (char *)&serv_addr.sin_addr.s_addr,
           server->h_length);
     serv_addr.sin_port = htons(portno);
-//    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
-//        error("ERROR connecting");
-//    bzero(buffer, 256);
     promptLicensePlate();
 //    printf("%s", buffer);
     sendto(sockfd, (const char *)buffer, strlen(buffer),
@@ -130,7 +120,6 @@ int main(int argc, char *argv[])
         error("ERROR reading from socket");
     RECVbuffer[n] = '\0';
     cout<<RECVbuffer<<endl;
-    //printf("%s", buffer);
     close(sockfd);
     return 0;
 }

@@ -10,11 +10,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-// Second COSC 3360 assignment for spring 2022
+// Second COSC 3360 assignment for spring 2023
 // Server part
 //
 // Brian Waobikeze
-// November 2021
+// March 2023
 
 
 using namespace std;
@@ -56,8 +56,12 @@ void readResults(string inputPath)
     string line;
     while (getline(fileVar, line))
     {
-        line.erase(line.size()-1);
-        formatResults(line);
+        if(line[line.size()-1]=='\r'){
+            line.erase(line.size()-1);
+        }
+        else{
+            formatResults(line);
+        }
     }
 }
 
@@ -77,14 +81,18 @@ void getTestResult(string LicensePlateNum)
 
 void promptPortNumber()
 {
+    string dataBaseFile;
     try
     {
+        cout<<"Enter the relative or absolute file Path of DataBase: ";
+        cin>>dataBaseFile;
+        readResults(dataBaseFile);
         cout << "Enter the server port number: ";
         cin >> portno;
     }
     catch (...)
     {
-        error("Error setting port number");
+        error("Error setting port number or file path");
     }
 }
 
@@ -108,7 +116,6 @@ void getClientResponse(char clientMessage[])
 }
 
 int main(int argc, char *argv[]) {
-    readResults("/Users/brianwaobikeze/Desktop/ServerClientProj2023/Stolen_cars.txt");
     int sockfd, newsockfd, n;
     socklen_t clilen;
     char buffer[MAXLINE];
@@ -135,7 +142,6 @@ int main(int argc, char *argv[]) {
     n = recvfrom(sockfd, (char *) buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &cli_addr, &clilen);
     buffer[n] = '\0';
     string checkIfKill;
-//    printf("%s", buffer);
         for (int i = 0; i <strlen(buffer) ;
              i++)
         {
