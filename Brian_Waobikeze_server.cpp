@@ -64,14 +64,15 @@ void readResults(string inputPath)
 void getTestResult(string LicensePlateNum)
 {
     string inputVal = LicensePlateNum;
-    cout << "getting results for:" << LicensePlateNum <<endl;
-    for (int i = 0; i < allTestResults.size(); i++) {
-        if (inputVal == allTestResults.at(i)) {
-            string MessageToCLient = LicensePlateNum + ": " + "Reported as stolen ";
+        if ( find(allTestResults.begin(),allTestResults.end(),inputVal) !=allTestResults.end()) {
+            string MessageToCLient = LicensePlateNum + ": " + "Reported as stolen";
             cout << MessageToCLient << endl;
             strcpy(clientResult, MessageToCLient.c_str());
         }
-    }
+        else{
+            string MessageToCLient = LicensePlateNum + ": " + " Is not in Database";
+            strcpy(clientResult, MessageToCLient.c_str());
+        }
 }
 
 void promptPortNumber()
