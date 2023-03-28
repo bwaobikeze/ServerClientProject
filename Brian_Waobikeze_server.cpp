@@ -22,7 +22,7 @@ using namespace std;
 vector<string> allTestResults;
 int portno;
 char clientResult[MAXLINE];
-int clientMessageLength = 18;
+
 void error(const char *msg)
 {
     perror(msg);
@@ -42,8 +42,6 @@ void printAllTestResults()
 
 void formatResults(string line)
 {
-    //vector<string> currentLine;
-    //cout<<line<<endl;
     allTestResults.push_back(line);
 }
 
@@ -56,11 +54,11 @@ void readResults(string inputPath)
         error("Unable to read results");
     }
     string line;
-    while (getline(fileVar, line,'\r'))
+    while (getline(fileVar, line))
     {
+        line.erase(line.size()-1);
         formatResults(line);
     }
-    //printAllTestResults();
 }
 
 void getTestResult(string LicensePlateNum)
@@ -92,7 +90,6 @@ void promptPortNumber()
 void getClientResponse(char clientMessage[])
 {
     string  LicensePlate;
-    //int messageLeng= sizeof (clientMessage)/sizeof (clientMessage[0]);
     try
     {
         for (int i = 0; i <strlen(clientMessage) ;
@@ -115,12 +112,10 @@ int main(int argc, char *argv[]) {
     socklen_t clilen;
     char buffer[MAXLINE];
     struct sockaddr_in serv_addr, cli_addr;
-try{
     sockfd = socket(AF_INET, SOCK_DGRAM, 0); // creates an internet socket of stream type
     if (sockfd < 0)
         error("ERROR opening socket");
     bzero((char *) &serv_addr, sizeof(serv_addr)); // sets all values in buffer  to 0
-    // portno = atoi(argv[1]);                       // sets port number for server to listen
     promptPortNumber();
     // configure server  addres struct
     serv_addr.sin_family = AF_INET;         // address family
@@ -131,25 +126,30 @@ try{
         // bind address of host and port
         error("ERROR on binding");
     }
-//    while (true)
-//    {
-    memset(&cli_addr,0,sizeof (cli_addr));
+    while (true)
+    {
+    memset(&cli_addr, 0, sizeof(cli_addr));
     clilen = sizeof(cli_addr);
     //socklen_t len;
-   n= recvfrom(sockfd, (char *) buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &cli_addr, &clilen);
+    n = recvfrom(sockfd, (char *) buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &cli_addr, &clilen);
     buffer[n] = '\0';
+    string checkIfKill;
 //    printf("%s", buffer);
-    getClientResponse(buffer);
-//    if(bufString=="killsvc"){
-//        break;
-//    }
+        for (int i = 0; i <strlen(buffer) ;
+             i++)
+        {
+            checkIfKill += buffer[i];
+
+        }
+    if(checkIfKill=="killsvc"){
+        break;
+    }
+    else{
+        getClientResponse(buffer);
+    }
     sendto(sockfd, (const char *) clientResult, strlen(clientResult), 0, (const struct sockaddr *) &cli_addr, clilen);
 }
-catch(const exception& e){
-    cout<<"error found"<<endl;
-    cout<<e.what();
-}
-    //cout<<"Received request to terminate the service bye!!"<<endl;
+    cout<<"Received request to terminate the service bye!!"<<endl;
  close(sockfd);
     return 0;
 
