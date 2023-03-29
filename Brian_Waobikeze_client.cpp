@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <cstring>
 // Second COSC 3360 assignment for spring 2023
 //  Client part
 // Brian Waobikeze
@@ -120,7 +121,6 @@ int main(int argc, char *argv[])
           server->h_length);
     serv_addr.sin_port = htons(portno);
     promptLicensePlate();
-//    printf("%s", buffer);
     sendto(sockfd, (const char *)buffer, strlen(buffer),
            MSG_CONFIRM, (const struct sockaddr *) &serv_addr,
            sizeof(serv_addr));
