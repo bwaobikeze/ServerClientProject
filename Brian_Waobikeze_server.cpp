@@ -58,6 +58,7 @@ void readResults(string inputPath)
     {
         if(line[line.size()-1]=='\r'){
             line.erase(line.size()-1);
+            formatResults(line);
         }
         else{
             formatResults(line);
