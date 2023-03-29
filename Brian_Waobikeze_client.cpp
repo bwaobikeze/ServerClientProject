@@ -23,6 +23,9 @@ void error(const char *msg)
     perror(msg);
     exit(0);
 }
+/**************************************************************************************
+ * This Function promptHost() prompts the user to enter the server hostname
+ *************************************************************************************/
 
 void promptHost()
 {
@@ -45,6 +48,9 @@ void promptHost()
         error("Error setting host name");
     }
 }
+/**************************************************************************************
+ * This Function promptPortNo() prompts the user to enter the server port number
+ *************************************************************************************/
 
 void promptPortNo()
 {
@@ -59,6 +65,10 @@ void promptPortNo()
         error("Error setting port number");
     }
 }
+/**************************************************************************************
+ * This Function promptLicensePlate() prompts the user to enter the License Plate Number
+ * they want information about
+ *************************************************************************************/
 
 void promptLicensePlate()
 {
@@ -82,6 +92,10 @@ void promptLicensePlate()
         error("Error setting Licenses Plate");
     }
 }
+/**************************************************************************************
+ * This Function Main() runs the prevous function and creats the socket that wee are
+ * going to be using to communcate between the client and server
+ *************************************************************************************/
 
 int main(int argc, char *argv[])
 {

@@ -19,7 +19,7 @@
 
 using namespace std;
 #define MAXLINE 1024
-vector<string> allTestResults;
+vector<string> allLicensePlateResults;
 int portno;
 char clientResult[MAXLINE];
 
@@ -28,23 +28,20 @@ void error(const char *msg)
     perror(msg);
     exit(1);
 }
-
-void printAllTestResults()
-{
-    if (allTestResults.size() < 1)
-        error("All results vector is empty");
-    for (int i = 0; i < allTestResults.size(); i++)
-    {
-        cout << "License # "<< i<< ": "<< allTestResults[i] << endl;
-        cout << "==========\n";
-    }
-}
+/**************************************************************************************
+ * This Function formatResults() pushes the sting that it is given and pushes it to the
+ * allResult vector.
+ *************************************************************************************/
 
 void formatResults(string line)
 {
-    allTestResults.push_back(line);
+    allLicensePlateResults.push_back(line);
 }
-
+/**************************************************************************************
+ * This Function readResults() gets the input file path and gets each line of the file
+ * and checks at the end of the line to see if there is a return character and then passes
+ * the string into the formatResult()
+ *************************************************************************************/
 void readResults(string inputPath)
 {
     fstream fileVar;
@@ -65,11 +62,15 @@ void readResults(string inputPath)
         }
     }
 }
+/**************************************************************************************
+ * This Function getLicenseResult() checks the License Plate that is passed in by the user
+ * input against the llLicensePlateResults vector to see if it is contained in the databse
+ *************************************************************************************/
 
-void getTestResult(string LicensePlateNum)
+void getLicenseResult(string LicensePlateNum)
 {
     string inputVal = LicensePlateNum;
-        if ( find(allTestResults.begin(),allTestResults.end(),inputVal) !=allTestResults.end()) {
+        if (find(allLicensePlateResults.begin(), allLicensePlateResults.end(), inputVal) != allLicensePlateResults.end()) {
             string MessageToCLient = LicensePlateNum + ": " + "Reported as stolen";
             cout << MessageToCLient << endl;
             strcpy(clientResult, MessageToCLient.c_str());
@@ -80,7 +81,10 @@ void getTestResult(string LicensePlateNum)
             strcpy(clientResult, MessageToCLient.c_str());
         }
 }
-
+/**************************************************************************************
+ * This Function promptPortNumber() prompts the user to enter the path to the database
+ * as well as the portnumber they decide to use.
+ *************************************************************************************/
 void promptPortNumber()
 {
     string dataBaseFile;
@@ -97,7 +101,10 @@ void promptPortNumber()
         error("Error setting port number or file path");
     }
 }
-
+/**************************************************************************************
+ * This Function getClientResponse() gets teh clients response in terms of a character array
+ * and converts it into a string to compare against the database vector
+ *************************************************************************************/
 void getClientResponse(char clientMessage[])
 {
     string  LicensePlate;
@@ -109,13 +116,17 @@ void getClientResponse(char clientMessage[])
                     LicensePlate += clientMessage[i];
 
         }
-        getTestResult(LicensePlate);
+        getLicenseResult(LicensePlate);
     }
     catch (...)
     {
         cout << "Error attempting to get your result" << endl;
     }
 }
+/**************************************************************************************
+ * This Function Main() runs the prevous function and creats the socket that wee are
+ * going to be using to communcate between the client and server
+ *************************************************************************************/
 
 int main(int argc, char *argv[]) {
     int sockfd, newsockfd, n;
