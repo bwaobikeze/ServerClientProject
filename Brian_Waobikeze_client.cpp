@@ -31,7 +31,7 @@ void promptHost()
         string hostName = "";
         while (hostName != "localhost")
         {
-            cout << "Enter the server hostname; typically 'localhost': ";
+            cout << "Enter the server hostname type in 'localhost': ";
             cin >> hostName;
         }
         cout << "Host name: " << hostName << endl; // check host name
@@ -63,7 +63,7 @@ void promptPortNo()
 void promptLicensePlate()
 {
     try
-    { // make sure total client message length is 18
+    {
         string licenseNumber;
         string localMessage;
         while (1)
@@ -73,8 +73,6 @@ void promptLicensePlate()
             localMessage += licenseNumber;
             break;
         }
-
-//        cout << "Local message " << localMessage << endl;
         int clientMessageLength = localMessage.length();
         char clientMessageCharArray[clientMessageLength + 1];
         strcpy(buffer, localMessage.c_str());

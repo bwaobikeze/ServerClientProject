@@ -75,7 +75,8 @@ void getTestResult(string LicensePlateNum)
             strcpy(clientResult, MessageToCLient.c_str());
         }
         else{
-            string MessageToCLient = LicensePlateNum + ": " + " Is not in Database";
+            string MessageToCLient = LicensePlateNum + ": " + "Is not in Database";
+            cout << MessageToCLient << endl;
             strcpy(clientResult, MessageToCLient.c_str());
         }
 }
