@@ -35,9 +35,3 @@ The Server & Client Program is a simulation designed to showcase how data can be
 - Integration with a more advanced database system for a more realistic database simulation.
 - Implementation of additional networking protocols to provide a broader understanding of network programming.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-*Note: This README is a sample template and should be customized to match your project's specific details.*
