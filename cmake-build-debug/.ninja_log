@@ -1,8 +1,0 @@
-# ninja log v5
-1626	1740	1680101323810972181	ServerClientProj2023_0	d564b1d708ae680e
-0	113	1677817615994012778	build.ninja	6db5478f53fdb3fa
-2	635	1677817039790615420	CMakeFiles/ServerClientProj2023.dir/Brian_Waobikeze_server.cpp.o	483249ec66ce4fcd
-3	1625	1680101323688163424	CMakeFiles/ServerClientProj2023_0.dir/Brian_Waobikeze_server.cpp.o	846525854e9eae9a
-2922	3284	1678831445630585511	ServerClientProj2023	217534e9435f2ca6
-0	752	1677815858910782967	CMakeFiles/ServerClientProj2023.dir/main.cpp.o	f18394fd9bf58200
-2	2922	1678831445264887500	CMakeFiles/ServerClientProj2023.dir/Brian_Waobikeze_client.cpp.o	214022bb279461a8
