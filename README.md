@@ -1,8 +1,6 @@
 
 # Server & Client Program
 
-![Coding Animated GIF](https://gifdb.com/images/high/coding-animated-laptop-flow-stream-ja04010rm5o68zfk.gif)
-
 ## Description
 
 The Server & Client Program is a simulation designed to showcase how data can be looked up in a database using a client-server architecture. The program utilizes datagram sockets in C++ to establish and maintain communication between the client and the server. The primary objective of this project is to illustrate the mechanics of data retrieval through a networked environment.
